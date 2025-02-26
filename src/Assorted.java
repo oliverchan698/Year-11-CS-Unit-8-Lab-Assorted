@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 public class Assorted {
 
@@ -13,8 +14,16 @@ public class Assorted {
      * @return the sum of the elements in the list as if all elements were
      *         integer data types.
      */
-    public static int findSum(List<?> list) {
-        return 0;
+    public static int findSum(List<?> list) { // I got assistance from ChatGPT for this one. I really couldn't think of a solution myself - but I might just be overestimating this.
+        int sum = 0;
+        for (Object object : list) {
+            if (object instanceof Integer) {
+                sum += (Integer) object;
+            } else if (object instanceof String) {
+                sum += Integer.parseInt((String) object);
+            }
+        }
+        return sum;
     }
 
     /**
@@ -26,7 +35,12 @@ public class Assorted {
      * @return a list containing integers only.
      */
     public static List<Integer> filterStrings(List list) {
-        return null;
+        for (int i = 0; i < list.size(); i++) {
+            if ((list.get(i)) instanceof String) {
+                list.remove(i);
+            }
+        }
+        return list;
     }
 
     /**
@@ -39,7 +53,12 @@ public class Assorted {
      *         e.g. ["1: a", "2: b", "3: c"]
      */
     public static List<String> lineNumbering(List<String> list) {
-        return null;
+        int i = 0;
+        for (String string : list) {
+            list.set(i, i + ": " + string);
+            i++;
+        }
+        return list;
     }
 
     /**
@@ -61,7 +80,12 @@ public class Assorted {
      * @return the number of people who are still on the bus after the last stop.
      */
     public static int busStop(List<Integer[]> list) {
-        return 0;
+        int people = 0;
+        for (int i = 0; i < list.size(); i++) {
+            people += list.get(i)[0];
+            people -= list.get(i)[1];
+        }
+        return people;
     }
 
     /**
@@ -72,8 +96,14 @@ public class Assorted {
      * @return the decimal value of the binary representation of the list.
      *         Eg: [0, 0, 0, 1] is treated as 0001 which is the binary representation of 1.
      */
-    public static int toBinary(List<Integer> list) {
-        return 0;
+    public static int toBinary(List<Integer> list) { // Misleading Warning: If this is converting binary to decimal, this should be called something like "toDecimal".
+        int decimal = 0;
+        int place = (int) Math.pow(2.0, list.size() - 1);
+        for (Integer digit : list) {
+            decimal += digit * place;
+            place /= 2;
+        }
+        return decimal;
     }
 
     /**
@@ -92,7 +122,14 @@ public class Assorted {
      *              subtractList([1,2,2,2,3], [2]) returns [1,3]
      */
     public static List<Integer> subtractList(List<Integer> listA, List<Integer> listB) {
-        return null;
+        for (int i = 0; i < listA.size(); i++) {
+            for (Integer num : listB) {
+                if (listA.get(i) == num) {
+                    listA.remove(i);
+                }
+            }
+        }
+        return listA;
     }
 
     /**
@@ -106,7 +143,22 @@ public class Assorted {
      *         integers remain in their original position.
      */
     public static List<Integer> sortOdd(List<Integer> list) {
-        return null;
+        List<Integer> oddNumbers = new ArrayList<>();
+        for (Integer item : list) {
+            if (item % 2 == 1) {
+                oddNumbers.add(item);
+            }
+        }
+        Collections.sort(oddNumbers);
+        int count = 0;
+        for (int j = 0; j < list.size(); j++) {
+            if (list.get(j) % 2 == 1) {
+                list.remove(j);
+                list.add(j, oddNumbers.get(count));
+                count++;
+            }
+        }
+        return list;
     }
 
     /**
