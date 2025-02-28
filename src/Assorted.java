@@ -122,13 +122,22 @@ public class Assorted {
      *              subtractList([1,2,2,2,3], [2]) returns [1,3]
      */
     public static List<Integer> subtractList(List<Integer> listA, List<Integer> listB) {
-        for (int i = 0; i < listA.size(); i++) {
+        int size = listA.size();
+        for (int i = 0; i < size; i++) {
             for (Integer num : listB) {
                 if (listA.get(i) == num) {
-                    listA.remove(i);
+                    listA.set(i, -1);
                 }
             }
         }
+        System.out.println(listA);
+        for (int i = 0; i < listA.size(); i++) {
+            if (listA.get(i) == -1) {
+                listA.remove(i);
+                i--; 
+            }
+        }
+        System.out.println(listA);
         return listA;
     }
 
